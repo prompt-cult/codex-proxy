@@ -5,10 +5,18 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - '**/*.md'
+      - 'docs/**'
+
+concurrency:
+  group: cargo-deny-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   cargo-deny:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     defaults:
       run:
         working-directory: ./codex-rs
